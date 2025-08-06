@@ -484,3 +484,11 @@ footer {
       display: none;
     }
   }
+
+
+
+
+/* Just adding it for checking the animation*/
+  .sidebar {
+  transition: all 0.3s ease-in-out;
+}
