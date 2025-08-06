@@ -1,0 +1,59 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="id-card shadow text-center">
+
+    <!-- Print Button -->
+    <button class="print-btn" onclick="window.print()">Print</button>
+
+    <!-- Header -->
+    <div class="id-header">
+      <h4 class="mb-0 fw-bold">INTERNATIONAL SCHOOL OF MISSION</h4>
+      <small>ID CARD</small>
+    </div>
+
+    <!-- Student Photo -->
+    <div class="position-relative">
+      <% if (student.photo) { %>
+        <img src="<%= student.photo %>" alt="Student Photo" class="id-photo mt-3">
+      <% } else { %>
+        <img src="https://passport-photo.online/_optimized/prepare2.0498e1e2-opt-1920.WEBP" alt="Student Photo" class="id-photo mt-3">
+      <% } %>
+    </div>
+
+    <!-- Info -->
+    <div class="id-body">
+      <h5><%= student.name %></h5>
+  <p><strong>Class:</strong> <%= student.class %>(<%= student.section %>)</p>
+      <p><strong>Roll No:</strong> <%= student.rollNo %></p>
+    
+      <p><strong>DOB:</strong> <%= student.dateOfBirth %></p>
+      <p><strong>Parent:</strong> <%= student.parentName %></p>
+      <p><strong>Contact:</strong> <%= student.contact %></p>
+
+      <!-- QR Code -->
+      <canvas id="qr" class="qr-code"></canvas>
+
+      <!-- Admin Signature -->
+      <div class="signature mt-3">
+        <hr style="width: 120px; margin: 5px auto 0;">
+        <div>Principal / Admin</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="id-footer">
+      © <%= new Date().getFullYear() %> ISM | www.ism.edu
+    </div>
+  </div>
+</div>
+<!-- Action Buttons -->
+<div class="mt-4 text-center">
+  <a href="/admin/students/<%= student._id %>/edit" class="btn btn-outline-primary mx-2">Edit</a>
+
+  <form action="/admin/students/<%= student._id %>?_method=DELETE" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this student? This action cannot be undone.');">
+    <button type="submit" class="btn btn-outline-danger mx-2">Delete</button>
+  </form>
+
+  <a href="/admin/students" class="btn btn-outline-secondary mx-2">Exit</a>
+</div>

@@ -1,0 +1,41 @@
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <h4 class="text-center mb-4">Teacher Login</h4>
+<form action="/teacher/dashboard?_method=PUT" method="POST">
+
+              <div class="mb-3">
+                <label for="id" class="form-label">Employee Id</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="id"
+                  name="id"
+                  placeholder="Enter your id"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="dob" class="form-label">Date Of Birth</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dob"
+                  name="dob"
+                  placeholder="Enter Date of Birth (YYYY-MM-DD) "
+                  required
+                />
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>

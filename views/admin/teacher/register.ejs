@@ -1,0 +1,80 @@
+
+
+<div class="container mt-5" style="max-width: 700px">
+  <h2 class="mb-4 text-center text-primary">Register a New Teacher</h2>
+
+ <form action="/admin/teachers" method="POST"  class="needs-validation" novalidate>
+  <input type="hidden" id="employeeId" name="employeeId" />
+
+  <div class="mb-3">
+    <label for="name" class="form-label">Full Name</label>
+    <input type="text" class="form-control" id="name" name="name" required pattern="^[A-Za-z\s]+$">
+    <div class="invalid-feedback">Please enter a valid name using only letters.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="dateOfBirth" class="form-label">Date of Birth</label>
+    <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="YYYY-MM-DD" required pattern="^\d{4}-\d{2}-\d{2}$">
+    <div class="invalid-feedback">Please enter a valid date of birth.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email Address</label>
+    <input type="email" class="form-control" id="email" name="email" required>
+    <div class="invalid-feedback">Please enter a valid email address.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="contact" class="form-label">Contact Number</label>
+    <input type="text" class="form-control" id="contact" name="contact" pattern="^[0-9]{10}$" required maxlength="10">
+    <div class="invalid-feedback">Contact number must be 10 digits.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+    <div class="invalid-feedback">Please enter an address.</div>
+  </div>
+
+    <!-- Class -->
+    <div class="col-md-4">
+      <label for="class" class="form-label">Class</label>
+      <select id="class" name="class" class="form-select" defaultValue="*" >
+        <option selected disabled value="">Choose...</option>
+        <% for(let i=1; i <=10; i++) { %>
+          <option value="<%= i %>"><%= i %></option>
+        <% } %>
+      </select>
+      <div class="invalid-feedback">Please select a class.</div>
+    </div>
+
+    <!-- Section -->
+    <div class="col-md-4">
+      <label for="section" class="form-label">Section</label>
+      <select id="section" name="section" class="form-select" defaultValue="*" >
+        <option selected disabled value="">Choose...</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+      </select>
+      <div class="invalid-feedback">Please select a section.</div>
+    </div>
+  <div class="mb-3">
+    <label for="image" class="form-label">Photo URL</label>
+    <input type="url" class="form-control" id="image" name="image" placeholder="Optional">
+    <div class="form-text">Leave blank to use default profile photo.</div>
+  </div>
+
+  <div class="text-end">
+    <a href="/admin/teachers" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-primary">Register Teacher</button>
+  </div>
+</form>
+
+</div>
+
+<script>
+  document.querySelector('form').addEventListener('submit', function (e) {
+    const randomId = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit
+    document.getElementById('employeeId').value = randomId;
+  });
+</script>

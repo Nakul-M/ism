@@ -1,0 +1,120 @@
+<style>
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body * {
+      visibility: hidden;
+    }
+
+    #result-content, #result-content * {
+      visibility: visible;
+    }
+
+    #result-content {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: scale(0.95);
+      transform-origin: top left;
+      width: 794px;
+      height: 1123px;
+      overflow: hidden;
+    }
+
+    .d-print-none {
+      display: none !important;
+    }
+  }
+</style>
+
+
+<div id="result-content" style="width: 794px; height: 1100px; padding: 30px; margin: auto; font-family: 'Arial', sans-serif; background: white; border: 1px solid #ccc; box-sizing: border-box;">
+
+  <!-- School Header -->
+  <div style="text-align: center; margin-bottom: 20px;">
+    <img src="https://shikshaniketanjk.in/wp-content/uploads/2020/07/LOGO-150x150.jpg" alt="School Logo" style="height: 70px;">
+    <h2 style="margin: 5px 0;">Indra Shishu Mandir School</h2>
+    <p style="margin: 0;">Affiliated to JKBOSE, Jammu | School Code: ******</p>
+    <p style="margin: 0;">Nagrota Gujroo, Billawar ,184205</p>
+    <hr style="margin-top: 15px; border-top: 2px solid black;">
+    <h3 style="text-decoration: underline;">Report Card</h3>
+  </div>
+
+  <!-- Student Info -->
+  <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+    <div style="width: 65%;">
+      <p><strong>Name:</strong> <%= student.name %></p>
+      <p><strong>Roll No:</strong> <%= student.rollNo %></p>
+      <p><strong>Class:</strong> <%= student.class %></p>
+      <p><strong>DOB:</strong> <%= student.dateOfBirth %></p>
+      <p><strong>Parent Name:</strong> <%= student.parentName %></p>
+    </div>
+    <div style="width: 30%; text-align: center;">
+      <img src="<%= 'https://passport-photo.online/_optimized/prepare2.0498e1e2-opt-1920.WEBP'%>" style="border: 1px solid #000; height: 120px; width: 90px; object-fit: cover;">
+    </div>
+  </div>
+
+  <!-- Marks Table -->
+  <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+    <thead style="background: #000; color: white;">
+      <tr>
+        <th style="padding: 8px; border: 1px solid #000;">Exam</th>
+        <th style="padding: 8px; border: 1px solid #000;">Math</th>
+        <th style="padding: 8px; border: 1px solid #000;">Science</th>
+        <th style="padding: 8px; border: 1px solid #000;">English</th>
+        <th style="padding: 8px; border: 1px solid #000;">Hindi</th>
+        <th style="padding: 8px; border: 1px solid #000;">Social</th>
+        <th style="padding: 8px; border: 1px solid #000;">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% Object.keys(marks).forEach(exam => {
+          const m = marks[exam];
+          const total = (m.math || 0) + (m.science || 0) + (m.english || 0) + (m.hindi || 0) + (m.social || 0);
+      %>
+        <tr>
+          <td style="padding: 8px; border: 1px solid #000;"><%= exam %></td>
+          <td style="padding: 8px; border: 1px solid #000;"><%= m.math ?? '-' %></td>
+          <td style="padding: 8px; border: 1px solid #000;"><%= m.science ?? '-' %></td>
+          <td style="padding: 8px; border: 1px solid #000;"><%= m.english ?? '-' %></td>
+          <td style="padding: 8px; border: 1px solid #000;"><%= m.hindi ?? '-' %></td>
+          <td style="padding: 8px; border: 1px solid #000;"><%= m.social ?? '-' %></td>
+          <td style="padding: 8px; border: 1px solid #000;"><%= total %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <!-- Attendance -->
+  <div style="margin-bottom: 30px;">
+    <p><strong>Total Days:</strong> 200</p>
+    <p><strong>Days Present:</strong> <%= student.attendance || 185 %></p>
+    <p><strong>Attendance %:</strong> <%= ((student.attendance || 185) / 200 * 100).toFixed(2) %>%</p>
+    <p><strong>Remarks:</strong> Excellent</p>
+  </div>
+
+  <!-- Signatures -->
+  <div style="display: flex; justify-content: space-between; margin-top: 50px;">
+    <div>
+      <p>_____________________</p>
+      <p><strong>Class Teacher</strong></p>
+    </div>
+    <div>
+      <p>_____________________</p>
+      <p><strong>Principal</strong></p>
+    </div>
+  </div>
+
+  <!-- Print Buttons -->
+<div class="text-center mt-5 d-print-none">
+<button onclick="window.print()" class="btn btn-primary">Print Report Card</button>
+
+  <a href="/student/<%= student._id %>" class="btn btn-secondary ms-2">Back</a>
+</div>
+
+</div>

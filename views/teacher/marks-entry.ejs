@@ -1,0 +1,88 @@
+
+
+<div class="container my-5">
+  <!-- Top Bar: Exit & Exam Selector -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <a href="/teacher/<%= teacher._id %>/students" class="btn btn-secondary">
+      Exit
+    </a>
+
+    <h2 class="text-center fw-bold text-dark">
+      Enter Marks : <%= teacher.classTeacher %>-<%= teacher.section %>
+    </h2>
+
+    <!-- Placeholder for alignment -->
+    <div style="width: 100px;"></div>
+  </div>
+
+  <% if (students.length === 0) { %>
+    <div class="alert alert-warning text-center">
+      No students found in this class and section.
+    </div>
+  <% } else { %>
+
+    <!-- Marks Entry Form -->
+    <form action="/teacher/<%= teacher._id %>/marks-entry?_method=PUT" method="POST">
+      
+      <!-- Exam Selection -->
+      <div class="mb-4 d-flex justify-content-center">
+        <label for="examType" class="form-label me-2 fw-bold">Select Exam:</label>
+        <select name="examType" id="examType" class="form-select w-auto" required>
+          <option value="">Choose...</option>
+          <option value="U1">Unit Test 1 (U1)</option>
+          <option value="U2">Unit Test 2 (U2)</option>
+          <option value="U3">Unit Test 3 (U3)</option>
+          <option value="T1">Term 1 (T1)</option>
+          <option value="T2">Term 2 (T2)</option>
+        </select>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead style="background-color: black; color: white;">
+            <tr>
+              <th>Roll No</th>
+              <th>Name</th>
+              <th>Math</th>
+              <th>Science</th>
+              <th>English</th>
+              <th>Hindi</th>
+              <th>Social Science</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% students.sort((a, b) => a.rollNo - b.rollNo); %>
+            <% students.forEach((student, index) => { %>
+              <tr>
+                <td><%= student.rollNo %></td>
+                <td><%= student.name %></td>
+
+                <input type="hidden" name="marks[<%= index %>][studentId]" value="<%= student._id %>">
+
+                <td>
+                  <input type="number" name="marks[<%= index %>][math]" class="form-control" >
+                </td>
+                <td>
+                  <input type="number" name="marks[<%= index %>][science]" class="form-control" >
+                </td>
+                <td>
+                  <input type="number" name="marks[<%= index %>][english]" class="form-control" >
+                </td>
+                <td>
+                  <input type="number" name="marks[<%= index %>][hindi]" class="form-control" >
+                </td>
+                <td>
+                  <input type="number" name="marks[<%= index %>][social]" class="form-control" >
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-success px-5">Submit Marks</button>
+      </div>
+    </form>
+  <% } %>
+</div>

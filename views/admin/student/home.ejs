@@ -1,0 +1,130 @@
+
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- Sidebar -->
+    <nav class="col-md-2 d-none d-md-block bg-dark sidebar vh-100">
+      <div class="text-white ps-3 py-4">
+        <h4>Admin Panel</h4>
+      </div>
+      <ul class="nav flex-column ps-3">
+        <li class="nav-item mb-2">
+          <a href="/admin/dashboard" class="nav-link text-white"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a href="/admin/students" class="nav-link active bg-secondary text-white rounded"><i class="bi bi-people me-2"></i>Manage Students</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a href="/admin/teachers" class="nav-link text-white"><i class="bi bi-person-badge me-2"></i>Manage Teachers</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a href="/admin/results" class="nav-link text-white"><i class="bi bi-journal-check me-2"></i>Results</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a href="/admin/settings" class="nav-link text-white"><i class="bi bi-gear me-2"></i>Settings</a>
+        </li>
+        <li class="nav-item mt-4">
+          <a href="/logout" class="nav-link text-danger"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+        </li>
+      </ul>
+    </nav>
+
+  <!-- Main Content -->
+<main class="col-md-10 ms-sm-auto px-4 py-5 bg-light">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary mb-0">Student Management</h2>
+        <a href="/admin/students/new" class="btn btn-success">
+          <i class="bi bi-person-plus-fill me-1"></i> Register Student
+        </a>
+      </div>
+
+  <!-- Search Form -->
+<form class="row g-4 mb-3" action="/admin/students" method="GET">
+  <!-- Name Field -->
+  <div class="col-md-4">
+    <label class="form-label">Search by Name</label>
+    <input
+      type="text"
+      name="name"
+      class="form-control"
+      placeholder="First Letter Capital"
+      pattern="^[A-Z][a-zA-Z\s]*$"
+      value="<%= typeof query !== 'undefined' ? query.name : '' %>"
+    >
+  </div>
+
+  <!-- Class Field -->
+  <div class="col-md-4">
+    <label class="form-label">Class</label>
+    <select name="class" class="form-select">
+      <option value="">Select Class</option>
+      <% for (let i = 1; i <= 10; i++) { %>
+        <option value="<%= i %>" <%= query?.class == i ? 'selected' : '' %>><%= i %></option>
+      <% } %>
+    </select>
+  </div>
+
+  <!-- Section Field -->
+  <div class="col-md-4">
+    <label class="form-label">Section</label>
+    <select name="section" class="form-select">
+      <option value="">Select Section</option>
+      <option value="A" <%= query?.section == 'A' ? 'selected' : '' %>>A</option>
+      <option value="B" <%= query?.section == 'B' ? 'selected' : '' %>>B</option>
+    </select>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="col-12 d-grid">
+    <button type="submit" class="btn btn-outline-dark">
+      <i class="bi bi-search"></i> Search Student
+    </button>
+  </div>
+</form>
+
+<!-- Results -->
+<% if (students && students.length > 0) { %>
+  <div class="table-responsive mt-5">
+    <table class="table table-bordered table-hover bg-white">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Class</th>
+          <th>Section</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+       <% students.forEach(student => { %>
+  <tr>
+    <td><%= student.name %></td>
+    <td><%= student.class %></td>
+    <td><%= student.section %></td>
+    <td>
+      <a href="/admin/students/<%= student._id %>" class="btn btn-success">Show Profile</a>
+    </td>
+  </tr>
+<% }) %>
+
+      </tbody>
+    </table>
+  </div>
+<% } else if (typeof students !== 'undefined' && query && Object.keys(query).length > 0 ) { %>
+  <div class="alert alert-warning mt-5 text-center">No students found with the given criteria.</div>
+<% } %>
+
+
+      <div class="text-center text-muted mt-4">
+        <p>You can search by just Name, Class, or Section individually.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+  </div>
+</div>

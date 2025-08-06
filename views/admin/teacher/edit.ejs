@@ -1,0 +1,86 @@
+<div class="container mt-5" style="max-width: 600px">
+  <h2 class="mb-4 text-center">Edit Teacher</h2>
+
+  <form action="/admin/teachers/<%= teacher._id %>?_method=PUT" method="POST" class="needs-validation" novalidate>
+
+    <!-- Full Name -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Full Name</label>
+      <input type="text" class="form-control" id="name" name="teacher[name]" value="<%= teacher.name %>" required pattern="^[A-Z\s]+$">
+      <div class="invalid-feedback">Use capital letters only.</div>
+    </div>
+
+<!-- Employee ID -->
+<div class="mb-3">
+  <label for="employeeId" class="form-label">Employee ID</label>
+  <input type="text" class="form-control" id="employeeId" name="teacher[employeeId]" value="<%= teacher.employeeId %>" readonly>
+</div>
+    <!-- Date of Birth -->
+    <div class="mb-3">
+      <label for="dateOfBirth" class="form-label">Date of Birth</label>
+      <input type="text" class="form-control" id="dateOfBirth" name="teacher[dateOfBirth]" value="<%= teacher.dateOfBirth %>" placeholder="YYYY-MM-DD" required pattern="^\d{4}-\d{2}-\d{2}$">
+      <div class="invalid-feedback">Enter date in YYYY-MM-DD format.</div>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" name="teacher[email]" value="<%= teacher.email %>" required>
+      <div class="invalid-feedback">Enter a valid email address.</div>
+    </div>
+
+    <!-- Contact -->
+    <div class="mb-3">
+      <label for="contact" class="form-label">Contact</label>
+      <input type="tel" class="form-control" id="contact" name="teacher[contact]" value="<%= teacher.contact %>" required pattern="^[0-9]{10}$" maxlength="10">
+      <div class="invalid-feedback">Enter a valid 10-digit contact number.</div>
+    </div>
+
+    <!-- Address -->
+    <div class="mb-3">
+      <label for="address" class="form-label">Address</label>
+      <textarea class="form-control" id="address" name="teacher[address]" required rows="2"><%= teacher.address %></textarea>
+      <div class="invalid-feedback">Please enter the address.</div>
+    </div>
+   <!-- Class and Section -->
+<div class="mb-3 row">
+  <!-- Class Dropdown -->
+  <div class="col">
+    <label for="class" class="form-label">Class</label>
+    <select id="class" name="teacher[class]" class="form-select" required>
+      <option disabled value="">Choose...</option>
+      <option value="*" <%= teacher.classTeacher == "*" ? 'selected' : '' %>>NONE(*)</option>
+      <% for(let i = 1; i <= 10; i++) { %>
+        <option value="<%= i %>" <%= teacher.classTeacher == i ? 'selected' : '' %>><%= i %></option>
+      <% } %>
+    </select>
+    <div class="invalid-feedback">Please select a class.</div>
+  </div>
+
+  <!-- Section Dropdown -->
+  <div class="col">
+    <label for="section" class="form-label">Section</label>
+    <select id="section" name="teacher[section]" class="form-select" required>
+      <option disabled value="">Choose...</option>
+      <option value="*" <%= teacher.section === '*' ? 'selected' : '' %>>NONE(*)</option>
+      <option value="A" <%= teacher.section === 'A' ? 'selected' : '' %>>A</option>
+      <option value="B" <%= teacher.section === 'B' ? 'selected' : '' %>>B</option>
+    </select>
+    <div class="invalid-feedback">Please select a section.</div>
+  </div>
+</div>
+
+    <!-- Photo URL -->
+    <div class="mb-3">
+      <label for="photo" class="form-label">Photo URL</label>
+      <input type="url" class="form-control" id="photo" name="teacher[photo]" value="<%= teacher.photo %>" placeholder="https://example.com/photo.jpg">
+      <div class="invalid-feedback">Please enter a valid URL.</div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between">
+      <a href="/admin/teachers/<%= teacher._id %>" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-primary">Update Teacher</button>
+    </div>
+  </form>
+</div>

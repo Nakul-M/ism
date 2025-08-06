@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- Sidebar -->
+    <nav class="col-md-2 d-none d-md-block bg-dark sidebar vh-100">
+      <div class="text-white ps-3 py-4">
+        <h4>Admin Panel</h4>
+      </div>
+      <ul class="nav flex-column ps-3">
+        <li class="nav-item mb-2">
+          <a href="/admin/dashboard" class="nav-link text-white"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a href="/admin/students" class="nav-link text-white"><i class="bi bi-people me-2"></i>Manage Students</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a href="/admin/teachers" class="nav-link active bg-secondary text-white rounded"><i class="bi bi-person-badge me-2"></i>Manage Teachers</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a href="/admin/results" class="nav-link text-white"><i class="bi bi-journal-check me-2"></i>Results</a>
+        </li>
+        <li class="nav-item mb-2">
+          <a href="/admin/settings" class="nav-link text-white"><i class="bi bi-gear me-2"></i>Settings</a>
+        </li>
+        <li class="nav-item mt-4">
+          <a href="/logout" class="nav-link text-danger"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="col-md-10 ms-sm-auto px-4 py-5 bg-light">
+      <div class="card shadow-sm">
+        <div class="card-body">
+         <div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold text-primary mb-0">Teacher Management</h2>
+  <div class="d-flex gap-2">
+    <a href="/admin/teachers/new" class="btn btn-success">
+      <i class="bi bi-person-plus-fill me-1"></i> Register Teacher
+    </a>
+    <a href="/admin/teachers" class="btn btn-outline-secondary">
+      <i class="bi bi-list-ul"></i> Show All
+    </a>
+  </div>
+</div>
+
+
+          <!-- Search Form -->
+          <form class="row g-4 mb-3" action="/admin/teachers" method="GET">
+            <div class="col-md-4">
+              <label class="form-label">Search by Name</label>
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                placeholder="First Letter Capital"
+                pattern="^[A-Z][a-zA-Z\s]*$"
+                value="<%= typeof query !== 'undefined' ? query.name : '' %>"
+              >
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Employee ID</label>
+              <input
+                type="text"
+                name="employeeId"
+                class="form-control"
+                placeholder="Enter Employee ID"
+                value="<%= typeof query !== 'undefined' ? query.employeeId : '' %>"
+              >
+            </div>
+
+            <div class="col-md-4 d-flex align-items-end">
+              <button type="submit" class="btn btn-outline-dark w-100">
+                <i class="bi bi-search"></i> Search
+              </button>
+            </div>
+          </form>
+
+          <!-- Results -->
+          <% if (teachers && teachers.length > 0) { %>
+            <div class="table-responsive mt-5">
+              <table class="table table-bordered table-hover bg-white">
+                <thead class="table-light">
+                  <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% teachers.forEach(teacher => { %>
+                    <tr>
+                      <td><%= teacher.employeeId %></td>
+                      <td><%= teacher.name %></td>
+           
+                      <td><%= teacher.contact %></td>
+                      <td>
+                        <a href="/admin/teachers/<%= teacher._id %>" class="btn btn-success btn-sm">Show Profile</a>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          <% } else if (typeof teachers !== 'undefined' && query && Object.keys(query).length > 0 ) { %>
+            <div class="alert alert-warning mt-5 text-center">No teachers found with the given criteria.</div>
+          <% } %>
+
+          <div class="text-center text-muted mt-4">
+            <p>You can search by Name or Employee ID individually or both.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

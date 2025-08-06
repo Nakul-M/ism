@@ -1,0 +1,92 @@
+<div class="container mt-5" style="max-width: 600px">
+  <h2 class="mb-4 text-center">Edit Student</h2>
+
+  <form action="/admin/students/<%= student._id %>?_method=PUT" method="POST" class="needs-validation" novalidate>
+
+    <!-- Full Name -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Full Name</label>
+      <input type="text" class="form-control" id="name" name="student[name]" value="<%= student.name %>" required pattern="^[A-Z\s]+$">
+      <div class="invalid-feedback">Use capital letters only.</div>
+    </div>
+
+    <!-- Roll Number -->
+    <div class="mb-3">
+      <label for="rollNo" class="form-label">Roll No</label>
+      <input type="text" class="form-control" id="rollNo" name="student[rollNo]" value="<%= student.rollNo %>" required pattern="^[0-9]+$">
+      <div class="invalid-feedback">Digits only.</div>
+    </div>
+
+    <!-- Class and Section -->
+    <div class="mb-3 row">
+      <div class="col">
+        <label for="class" class="form-label">Class</label>
+        <select id="class" name="student[class]" class="form-select" required>
+          <option disabled value="">Choose...</option>
+          <% for(let i=1; i <= 10; i++) { %>
+            <option value="<%= i %>" <%= student.class == i ? 'selected' : '' %>><%= i %></option>
+          <% } %>
+        </select>
+        <div class="invalid-feedback">Please select a class.</div>
+      </div>
+
+      <div class="col">
+        <label for="section" class="form-label">Section</label>
+        <select id="section" name="student[section]" class="form-select" required>
+          <option disabled value="">Choose...</option>
+          <option value="A" <%= student.section === 'A' ? 'selected' : '' %>>A</option>
+          <option value="B" <%= student.section === 'B' ? 'selected' : '' %>>B</option>
+        </select>
+        <div class="invalid-feedback">Please select a section.</div>
+      </div>
+    </div>
+
+    <!-- Date of Birth -->
+    <div class="mb-3">
+      <label for="dateOfBirth" class="form-label">Date of Birth</label>
+      <input type="text" class="form-control" id="dateOfBirth" name="student[dateOfBirth]" value="<%= student.dateOfBirth %>" placeholder="YYYY-MM-DD" required pattern="^\d{4}-\d{2}-\d{2}$">
+      <div class="invalid-feedback">Enter date in YYYY-MM-DD format.</div>
+    </div>
+
+    <!-- Parent Name -->
+    <div class="mb-3">
+      <label for="parentName" class="form-label">Parent's Name</label>
+      <input type="text" class="form-control" id="parentName" name="student[parentName]" value="<%= student.parentName %>" required pattern="^[A-Za-z\s]{2,}$">
+      <div class="invalid-feedback">Enter a valid parent/guardian name.</div>
+    </div>
+
+    <!-- Student Contact -->
+    <div class="mb-3">
+      <label for="contact" class="form-label">Student Contact</label>
+      <input type="tel" class="form-control" id="contact" name="student[contact]" value="<%= student.contact %>" required pattern="^[0-9]{10}$" maxlength="10">
+      <div class="invalid-feedback">Enter a valid 10-digit contact number.</div>
+    </div>
+
+    <!-- Parent Contact -->
+    <div class="mb-3">
+      <label for="parentContact" class="form-label">Parent Contact</label>
+      <input type="tel" class="form-control" id="parentContact" name="student[parentContact]" value="<%= student.parentContact %>" required pattern="^[0-9]{10}$" maxlength="10">
+      <div class="invalid-feedback">Enter a valid 10-digit parent contact number.</div>
+    </div>
+
+    <!-- Address -->
+    <div class="mb-3">
+      <label for="address" class="form-label">Address</label>
+      <textarea class="form-control" id="address" name="student[address]" required rows="2"><%= student.address %></textarea>
+      <div class="invalid-feedback">Please enter the address.</div>
+    </div>
+
+    <!-- Photo URL -->
+    <div class="mb-3">
+      <label for="photo" class="form-label">Photo URL</label>
+      <input type="url" class="form-control" id="photo" name="student[photo]" value="<%= student.photo %>" placeholder="https://example.com/photo.jpg">
+      <div class="invalid-feedback">Please enter a valid URL.</div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between">
+      <a href="/admin/students/<%= student._id %>" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-primary">Update Student</button>
+    </div>
+  </form>
+</div>

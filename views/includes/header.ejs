@@ -1,0 +1,98 @@
+<!-- Top Bar -->
+ <% if (typeof showFooter === 'undefined' || showFooter) { %>
+  <div class="bg-light py-2 px-4 d-flex justify-content-between align-items-center">
+    <div>
+      <i class="bi bi-envelope"></i> ***********mail
+      &nbsp; | &nbsp;
+      <i class="bi bi-telephone"></i> ***** ; *****phone
+    </div>
+  <!-- Button Section -->
+<div class="d-flex flex-wrap gap-3 justify-content-center my-4">
+  <a href="/transport" class="btn btn-custom">
+    <i class="bi bi-truck me-2"></i>Transport Fare
+  </a>
+  <a href="#" class="btn btn-custom">
+    <i class="bi bi-credit-card-2-front me-2"></i>Online Fee Payment
+  </a>
+  <a href="#" class="btn btn-custom">
+    <i class="bi bi-people me-2"></i>Alumni
+  </a>
+  <a href="#" class="btn btn-custom">
+    <i class="bi bi-bell me-2"></i>Notifications
+  </a>
+  <a href="#" class="btn btn-custom">
+    <i class="bi bi-briefcase me-2"></i>Career
+  </a>
+</div>
+
+  </div>
+    <% } %>
+
+  <!-- Navbar -->
+ <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3 sticky-top border-bottom">
+  <div class="container">
+    <!-- Logo & Brand -->
+    <a class="navbar-brand d-flex align-items-center" href="/index">
+      <img src="https://shikshaniketanjk.in/wp-content/uploads/2020/07/LOGO-150x150.jpg" alt="Logo" width="50" class="me-2 rounded-circle" />
+      <span class="fw-bold fs-4 text-primary">Indra Shishu</span>
+    </a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center gap-3 fs-6">
+
+        <!-- ABOUT US Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-uppercase fw-semibold" href="/aboutus" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            About Us
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="aboutDropdown">
+            <li><a class="dropdown-item" href="#">Mission & Vision</a></li>
+            <li><a class="dropdown-item" href="#">Principal's Message</a></li>
+            <li><a class="dropdown-item" href="#">Management</a></li>
+            <li><a class="dropdown-item" href="#">Infrastructure</a></li>
+            <li><a class="dropdown-item" href="#">Our History</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a class="nav-link text-uppercase fw-semibold" href="/admission">Admission</a></li>
+        <li class="nav-item"><a class="nav-link text-uppercase fw-semibold" href="#">Academics</a></li>
+        <li class="nav-item"><a class="nav-link text-uppercase fw-semibold" href="#">Gallery & Events</a></li>
+
+        <!-- DOWNLOADS Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-uppercase fw-semibold" href="#" id="downloadsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Downloads
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="downloadsDropdown">
+            <li><a class="dropdown-item" href="/download/HW">Homework</a></li>
+            <li><a class="dropdown-item" href="#">Results</a></li>
+            <li><a class="dropdown-item" href="#">Syllabus</a></li>
+            <li><a class="dropdown-item" href="#">Timetable</a></li>
+            <li><a class="dropdown-item" href="#">Holiday List</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a class="nav-link text-uppercase fw-semibold" href="/contactus">Contact Us</a></li>
+
+        <!-- LOGIN Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-uppercase fw-semibold" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Login
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="loginDropdown">
+            <li><a class="dropdown-item" href="/login/student">Student Login</a></li>
+            <li><a class="dropdown-item" href="/login/teacher">Teacher Login</a></li>
+            <li><a class="dropdown-item" href="/login/admin">Admin Login</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,101 @@
+
+
+<div class="container mt-5" style="max-width: 800px;">
+  <h2 class="text-center mb-4">Register New Student</h2>
+
+  <form action="/admin/students" method="POST" class="row g-3 needs-validation" novalidate>
+
+  <!-- Name -->
+<div class="col-md-6">
+  <label for="name" class="form-label">Full Name</label>
+  <input
+    type="text"
+    class="form-control text-uppercase"
+    id="name"
+    name="name"
+    required
+    pattern="^[A-Z\s]+$"
+    oninput="this.value = this.value.toUpperCase();"
+  >
+  <div class="invalid-feedback">Capital letters only.</div>
+</div>
+
+    <!-- Roll No -->
+    <div class="col-md-6">
+      <label for="rollNo" class="form-label">Roll Number</label>
+      <input type="text" class="form-control" id="rollNo" name="rollNo" required pattern="^[0-9]+$">
+      <div class="invalid-feedback">Digits Only.</div>
+    </div>
+
+    <!-- Class -->
+    <div class="col-md-4">
+      <label for="class" class="form-label">Class</label>
+      <select id="class" name="class" class="form-select" required>
+        <option selected disabled value="">Choose...</option>
+        <% for(let i=1; i <=10; i++) { %>
+          <option value="<%= i %>"><%= i %></option>
+        <% } %>
+      </select>
+      <div class="invalid-feedback">Please select a class.</div>
+    </div>
+
+    <!-- Section -->
+    <div class="col-md-4">
+      <label for="section" class="form-label">Section</label>
+      <select id="section" name="section" class="form-select" required>
+        <option selected disabled value="">Choose...</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+      </select>
+      <div class="invalid-feedback">Please select a section.</div>
+    </div>
+
+    <!-- Contact -->
+    <div class="col-md-4">
+      <label for="contact" class="form-label">Student Contact</label>
+      <input type="tel" class="form-control" id="contact" name="contact" required pattern="^[0-9]{10}$" maxlength="10">
+      <div class="invalid-feedback">Enter a valid 10-digit contact number.</div>
+    </div>
+
+    <!-- Date of Birth -->
+    <div class="col-md-6">
+      <label for="dateOfBirth" class="form-label">Date of Birth</label>
+      <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="YYYY-MM-DD" required pattern="^\d{4}-\d{2}-\d{2}$">
+    </div>
+
+    <!-- Parent Name -->
+    <div class="col-md-6">
+      <label for="parentName" class="form-label">Parent/Guardian Name</label>
+      <input type="text" class="form-control" id="parentName"  required name="parentName" pattern="^[A-Za-z\s]{2,}$">
+      <div class="invalid-feedback">Please enter a valid parent/guardian name.</div>
+    </div>
+
+    <!-- Parent Contact -->
+    <div class="col-md-6">
+      <label for="parentContact" class="form-label">Parent Contact</label>
+      <input type="tel" class="form-control" id="parentContact" name="parentContact" required pattern="^[0-9]{10}$" maxlength="10">
+      <div class="invalid-feedback">Enter a valid 10-digit parent contact number.</div>
+    </div>
+
+    <!-- Address -->
+    <div class="col-md-6">
+      <label for="address" class="form-label">Address</label>
+      <textarea class="form-control" id="address" required name="address" rows="2"></textarea>
+    </div>
+
+    <!-- Photo URL (optional) -->
+    <div class="col-12">
+      <label for="photo" class="form-label">Photo URL (optional)</label>
+      <input type="url" class="form-control" id="photo" name="photo" placeholder="https://example.com/photo.jpg">
+      <div class="invalid-feedback">Please enter a valid URL.</div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="col-12 text-end">
+      <button type="submit" class="btn btn-success">Register Student</button>
+      <a href="/admin/students" class="btn btn-secondary ms-2">Cancel</a>
+    </div>
+  </form>
+</div>
+
+

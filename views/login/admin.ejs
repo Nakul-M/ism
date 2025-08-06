@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <h4 class="text-center mb-4">Admin Login</h4>
+            <form action="/login/admin" method="POST">
+              <div class="mb-3">
+                <label for="adminEmail" class="form-label">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="uxername"
+                  name="username"
+                  placeholder="username"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="adminPassword" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="adminPassword"
+                  name="password"
+                  placeholder="Enter password"
+                  required
+                />
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
