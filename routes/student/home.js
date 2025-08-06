@@ -18,7 +18,7 @@ router.put('/dashboard', async (req, res) => {
          req.session.student = student;
     // If found, redirect to dashboard
         req.flash('success', 'Logged in successfully');
-    res.redirect(`/student/dashboard/${student._id}`);
+    res.redirect(`/student/${student._id}`);
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
@@ -58,5 +58,25 @@ router.get('/:id/results', async (req, res) => {
   }
 });
 
+router.get('/:id/profile', async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+
+    if (!student) {
+      req.flash('error', 'Student not found');
+      return res.redirect('/login/student');
+    }
+
+    res.render('student/profile', {
+      student,
+      showFooter: false
+    });
+
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Something went wrong');
+    res.redirect('/student/login');
+  }
+});
 
 module.exports = router ;

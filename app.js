@@ -22,12 +22,10 @@ const logoutRouter =   require('./routes/logout/all');
 
 // MongoDB Connection
 mongoose.connect('mongodb+srv://Nakul-M:ismnagrota12@nakulproject.rlo0gdj.mongodb.net/?retryWrites=true&w=majority&appName=nakulproject', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+
 })
 .then(() => console.log('Connected to MongoDB Atlas'))
 .catch((err) => console.error('MongoDB connection error:', err));
-
 
 // View Engine Setup
 const methodOverride = require('method-override');
