@@ -70,5 +70,27 @@
 
   <!-- Custom JS -->
    <script src="/js/script.js"></script>
-</body>
+
+ <!-- Scroll-to-Top Button with Font Awesome -->
+<button id="scrollTopBtn" title="Go to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+<script>
+  // Show button after scrolling
+  window.onscroll = function() {
+    const btn = document.getElementById("scrollTopBtn");
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  };
+
+  // Scroll to top when clicked
+  document.getElementById("scrollTopBtn").onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+</script>
+
+  </body>
 </html>
