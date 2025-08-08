@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -19,6 +21,8 @@ const teacherRouter = require('./routes/teacher/home') ;
 const homeNavRouter = require('./routes/home/navabr') ;
 const loginRouter =   require('./routes/login/all');
 const logoutRouter =   require('./routes/logout/all');
+const paymentRoutes = require('./routes/payment');
+
 
 // MongoDB Connection
 mongoose.connect('mongodb+srv://Nakul-M:ismnagrota12@nakulproject.rlo0gdj.mongodb.net/?retryWrites=true&w=majority&appName=nakulproject', {
@@ -78,6 +82,7 @@ app.use('/teacher' , teacherRouter) ;
 app.use('/' , homeNavRouter);
 app.use("/login" , loginRouter) ;
 app.use("/logout" , logoutRouter) ;
+app.use('/payment', paymentRoutes);
 
 
 
