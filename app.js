@@ -25,11 +25,10 @@ const paymentRoutes = require('./routes/payment');
 
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://Nakul-M:ismnagrota12@nakulproject.rlo0gdj.mongodb.net/?retryWrites=true&w=majority&appName=nakulproject', {
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB Atlas'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
-})
-.then(() => console.log('Connected to MongoDB Atlas'))
-.catch((err) => console.error('MongoDB connection error:', err));
 
 // View Engine Setup
 const methodOverride = require('method-override');
