@@ -22,6 +22,7 @@ const homeNavRouter = require('./routes/home/navabr') ;
 const loginRouter =   require('./routes/login/all');
 const logoutRouter =   require('./routes/logout/all');
 const classFeesRoutes = require('./routes/admin/feeSetting');
+const adminResultsRouter = require('./routes/admin/results');
 
 
 
@@ -85,6 +86,7 @@ app.use('/' , homeNavRouter);
 app.use("/login" , loginRouter) ;
 app.use("/logout" , logoutRouter) ;
 app.use('/admin/class-fees', classFeesRoutes);
+app.use("/admin/results" , adminResultsRouter);
 
 
 

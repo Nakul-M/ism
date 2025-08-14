@@ -1,0 +1,17 @@
+<h1 class="mb-4">Result Visibility Control</h1>
+
+<div class="alert <%= settings.resultVisible ? 'alert-success' : 'alert-danger' %>">
+    <strong>Status:</strong> 
+    <%= settings.resultVisible ? 'Results are visible to all students' : 'Results are hidden from all students' %>
+</div>
+
+<form action="/admin/results" method="POST" class="mb-3">
+    <% if (settings.resultVisible) { %>
+        <button type="submit" class="btn btn-danger">Hide All Results</button>
+    <% } else { %>
+        <button type="submit" class="btn btn-success">Show All Results</button>
+    <% } %>
+</form>
+
+<!-- Exit / Back to Dashboard -->
+<a href="/admin/dashboard" class="btn btn-secondary">Exit to Dashboard</a>
