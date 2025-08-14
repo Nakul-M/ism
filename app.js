@@ -70,7 +70,7 @@ passport.deserializeUser(Admin.deserializeUser());
 
 // Routes
 app.get('/', (req, res) => {
-  res.send("Welcome");
+  res.redirect("/index");
 });
 // Admin Dashboard
 app.get('/admin/dashboard',isAdminLoggedin , (req, res) => {
