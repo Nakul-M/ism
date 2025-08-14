@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Student = require('../../models/student');
 const ClassMonthlyFee = require('../../models/ClassMonthlyFee');
+const Settings = require('../../models/settings');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const FeeStatus = require('../../models/StudentFeeStatus');
@@ -49,7 +50,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// View student results
 router.get('/:id/results', async (req, res) => {
   try {
     const student = await Student.findById(req.params.id);
@@ -57,16 +57,38 @@ router.get('/:id/results', async (req, res) => {
       return res.status(404).send('Student not found');
     }
 
+    const settings = await Settings.findOne();
+
+    // Get current month name (e.g., "August")
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const currentMonth = monthNames[new Date().getMonth()];
+    console.log(`${student.studentFeeStatus}`);
+
+    // Check result visibility + fee payment status
+    if (
+      !settings || 
+      !settings.resultVisible 
+    ) {
+      req.flash('error', 'Results are not available yet.');
+      return res.redirect(`/student/${student._id}`);
+    }
+
+    // Render results page
     res.render('student/results', {
       student,
       marks: student.marks,
       showFooter: false
     });
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
 });
+
 
 router.get('/:id/profile', async (req, res) => {
   try {
