@@ -21,7 +21,10 @@ const teacherRouter = require('./routes/teacher/home') ;
 const homeNavRouter = require('./routes/home/navabr') ;
 const loginRouter =   require('./routes/login/all');
 const logoutRouter =   require('./routes/logout/all');
-const paymentRoutes = require('./routes/payment');
+const classFeesRoutes = require('./routes/admin/feeSetting');
+
+
+
 
 
 // MongoDB Connection
@@ -81,7 +84,9 @@ app.use('/teacher' , teacherRouter) ;
 app.use('/' , homeNavRouter);
 app.use("/login" , loginRouter) ;
 app.use("/logout" , logoutRouter) ;
-app.use('/payment', paymentRoutes);
+app.use('/admin/class-fees', classFeesRoutes);
+
+
 
 
 

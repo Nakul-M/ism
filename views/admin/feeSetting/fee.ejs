@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class Monthly Fees</title>
+</head>
+<body>
+    <h1>Enter Monthly Fees</h1>
+    <form action="/admin/class-fees/edit" method="POST">
+        <label for="selectedClass">Select Class:</label>
+        <select id="selectedClass" name="selectedClass" required>
+            <% for(let i=1; i<=10; i++){ %>
+                <option value="<%= i %>">Class <%= i %></option>
+            <% } %>
+        </select>
+        <br><br>
+
+        <% const months = ["April","May","June","July","August","September","October","November","December","January","February","March"]; %>
+        <% months.forEach(month => { %>
+            <label><%= month %>:</label>
+            <input type="number" name="<%= month %>" min="0" required>
+            <br>
+        <% }) %>
+
+        <br>
+        <button type="submit">Save Fees</button>
+    </form>
+</body>
+</html>

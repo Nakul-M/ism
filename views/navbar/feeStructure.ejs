@@ -1,0 +1,46 @@
+
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Class-wise Monthly Fee Structure</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover text-center align-middle">
+       <thead style="background-color: black; color: white;"></thead>
+        <tr>
+          <th>Class</th>
+          <th>April</th>
+          <th>May</th>
+          <th>June</th>
+          <th>July</th>
+          <th>August</th>
+          <th>September</th>
+          <th>October</th>
+          <th>November</th>
+          <th>December</th>
+          <th>January</th>
+          <th>February</th>
+          <th>March</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% classFee.forEach(item => { %>
+          <tr>
+            <td><strong><%= item.class %></strong></td>
+            <td>₹<%= item.monthlyFees.April %></td>
+            <td>₹<%= item.monthlyFees.May %></td>
+            <td>₹<%= item.monthlyFees.June %></td>
+            <td>₹<%= item.monthlyFees.July %></td>
+            <td>₹<%= item.monthlyFees.August %></td>
+            <td>₹<%= item.monthlyFees.September %></td>
+            <td>₹<%= item.monthlyFees.October %></td>
+            <td>₹<%= item.monthlyFees.November %></td>
+            <td>₹<%= item.monthlyFees.December %></td>
+            <td>₹<%= item.monthlyFees.January %></td>
+            <td>₹<%= item.monthlyFees.February %></td>
+            <td>₹<%= item.monthlyFees.March %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

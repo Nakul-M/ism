@@ -1,0 +1,110 @@
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+ 
+ <h1>Fee Payment - <%= student.name %> (Class: <%= student.class %>)</h1>
+ <button 
+  style="background-color: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;"
+  onclick="window.location.href='/student/<%=student.id%>'">
+  Exit
+</button>
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Month</th>
+    <th>Amount</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+
+  <% 
+    // Define months in order
+    const monthNames = [
+      "April", "May", "June", "July", "August", "September",
+      "October", "November", "December", "January", "February", "March"
+    ];
+
+    monthNames.forEach(month => { 
+      const status = studentFeeStatus.fees[month]; // Paid / Unpaid
+      const amount = monthlyFees[month]; // from class fees or student fees
+  %>
+    <tr>
+      <td><%= month %></td>
+      <td>₹<%= amount %></td>
+     <td style="font-weight: bold; background-color: <%= status === 'Paid' ? '#90EE90' : '#FF7F7F' %>;">
+  <%= status %>
+</td>
+
+      <td>
+        <% if (status === 'Unpaid') { %>
+          <button onclick="payNow('<%= month %>', <%= amount %>)">Pay Now</button>
+        <% } else {%>
+             ✅
+           <% }%>
+
+      </td>
+    </tr>
+  <% }) %>
+</table>
+
+
+  <script>
+  function payNow(month, amount) {
+    fetch(`/student/<%= student._id %>/pay/${month}`, {
+      method: 'POST'
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      const options = {
+        key: "<%= razorpayKeyId %>",
+        amount: data.amount * 100,
+        currency: data.currency,
+        name: "School Fee Payment",
+        description: `Fee for ${month}`,
+        order_id: data.orderId,
+        handler: function (response) {
+          // After payment success, call backend to verify and update DB
+          fetch(`/student/<%= student._id %>/payment-success`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+              month: month
+            })
+          })
+          .then(res => res.json())
+          .then(updateRes => {
+            if (updateRes.error) {
+              alert(updateRes.error);
+            } else {
+              alert(updateRes.message);
+              location.reload();
+            }
+          })
+          .catch(err => {
+            console.error(err);
+            alert('Error verifying payment');
+          });
+        },
+        prefill: {
+          name: "<%= student.name %>",
+          email: "<%= student.email %>"
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error starting payment');
+    });
+  }
+</script>

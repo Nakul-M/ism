@@ -1,5 +1,6 @@
 const express= require("express" );
 const router = express.Router();
+const ClassMonthlyFee = require('../../models/ClassMonthlyFee');
 
 router.get('/index', (req, res) => {
   res.render('index');
@@ -18,5 +19,9 @@ router.get('/download/HW', (req, res) => {
 });
 router.get('/transport', (req, res) => {
   res.render('navbar/transport');
+});
+router.get('/feeStructure', async(req, res) => {
+   const classFee  = await ClassMonthlyFee.find({});
+  res.render('navbar/feeStructure' , {classFee} );
 });
 module.exports = router ;
