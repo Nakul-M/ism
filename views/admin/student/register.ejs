@@ -3,7 +3,7 @@
 <div class="container mt-5" style="max-width: 800px;">
   <h2 class="text-center mb-4">Register New Student</h2>
 
-  <form action="/admin/students" method="POST" class="row g-3 needs-validation" novalidate>
+  <form action="/admin/students" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
 
   <!-- Name -->
 <div class="col-md-6">
@@ -83,11 +83,10 @@
       <textarea class="form-control" id="address" required name="address" rows="2"></textarea>
     </div>
 
-    <!-- Photo URL (optional) -->
+    <!-- Photo  -->
     <div class="col-12">
-      <label for="photo" class="form-label">Photo URL (optional)</label>
-      <input type="url" class="form-control" id="photo" name="photo" placeholder="https://example.com/photo.jpg">
-      <div class="invalid-feedback">Please enter a valid URL.</div>
+      <label for="photo" class="form-label">Photo </label>
+      <input type="file" class="form-control" id="photo" name="photo">
     </div>
 
     <!-- Submit Button -->

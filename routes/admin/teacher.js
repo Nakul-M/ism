@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Teacher = require('../../models/teacher'); // Adjust the path as necessary
-const isAdminLoggedin = require('../../middlewares/isAdminLoggedin'); // Adjust the path as necessary
+const isAdminLoggedin = require('../../middlewares/isAdminLoggedin');
+const {upload , minFileSize} = require("../../middlewares/upload"); // Adjust the path as necessary
 router.use(isAdminLoggedin);
 
 // Ensure admin is logged in for all routes in this file
@@ -26,15 +27,18 @@ router.get('/new' ,async(req, res) => {
   res.render('admin/teacher/register' , { showFooter: false , teachers});
 });
 
-router.post('/' , async (req, res) => {
+router.post('/', upload.single("image"),minFileSize , async (req, res) => {
   try {
     const teacherData = req.body;
 
-    // Create and save the new student
+    // If a file is uploaded, add the Cloudinary URL
+    if (req.file) {
+      teacherData.image = req.file.path; // Cloudinary public URL
+    }
+
     const newTeacher = new Teacher(teacherData);
     await newTeacher.save();
 
-    // Redirect to students list after successful registration
     res.redirect('/admin/teachers');
   } catch (err) {
     console.error('Error registering teacher:', err);
@@ -70,17 +74,35 @@ router.get('/:id/edit' , async (req, res) => {
 });
 
 // Handle update
-router.put('/:id' , async (req, res) => {
+router.put('/:id', upload.single("image"),minFileSize, async (req, res) => {
   try {
-    await Teacher.findByIdAndUpdate(
-      req.params.id,
-      req.body.teacher,
-      { new: true, runValidators: true }
-    );
-    res.redirect(`/admin/teachers/${req.params.id}`);
+    const teacherId = req.params.id;
+    const updateData = req.body.teacher || {};
+
+    // Find existing teacher
+    const teacher = await Teacher.findById(teacherId);
+    if (!teacher) {
+      return res.status(404).send("Teacher not found");
+    }
+
+    // If new photo uploaded → use Cloudinary URL
+    if (req.file) {
+      updateData.image = req.file.path;
+    } else {
+      // Keep existing photo
+      updateData.image = teacher.image;
+    }
+
+    // Update teacher
+    await Teacher.findByIdAndUpdate(teacherId, updateData, {
+      new: true,
+      runValidators: true
+    });
+
+    res.redirect(`/admin/teachers/${teacherId}`);
   } catch (err) {
     console.error("Update failed:", err);
-    res.status(500).send('Update failed');
+    res.status(500).send("Update failed");
   }
 });
 

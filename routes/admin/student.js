@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Student = require('../../models/student'); // Adjust the path as necessary
 const isAdminLoggedin = require('../../middlewares/isAdminLoggedin'); // Adjust the path as necessary
-
+const {upload , minFileSize}= require("../../middlewares/upload"); 
 router.use(isAdminLoggedin);
 
 router.get('/' ,async(req, res) => {
@@ -26,15 +26,18 @@ router.get('/new',async(req, res) => {
 });
 
 // Handle new student registration
-router.post('/' , async (req, res) => {
+router.post('/', upload.single("photo"),minFileSize, async (req, res) => {
   try {
     const studentData = req.body;
 
-    // Create and save the new student
+    // If a file is uploaded, add its Cloudinary URL
+    if (req.file) {
+      studentData.photo = req.file.path; // Cloudinary public URL
+    }
+
     const newStudent = new Student(studentData);
     await newStudent.save();
 
-    // Redirect to students list after successful registration
     res.redirect('/admin/students');
   } catch (err) {
     console.error('Error registering student:', err);
@@ -62,13 +65,36 @@ router.get('/:id/edit' , async (req, res) => {
   }
 });
 
-// Handle update
-router.put('/:id', async (req, res) => {
+
+router.put('/:id', upload.single("photo"),minFileSize , async (req, res) => {
   try {
-    await Student.findByIdAndUpdate(req.params.id, req.body.student, { new: true, runValidators: true });
-    res.redirect(`/admin/students/${req.params.id}`);
+    const studentId = req.params.id;
+    const updateData = req.body.student || {};
+
+    // Find existing student
+    const student = await Student.findById(studentId);
+    if (!student) {
+      return res.status(404).send("Student not found");
+    }
+
+    // If a new photo is uploaded, replace it
+    if (req.file) {
+      updateData.photo = req.file.path; // Cloudinary URL
+    } else {
+      // Keep old photo if none uploaded
+      updateData.photo = student.photo;
+    }
+
+    // Update in DB
+    await Student.findByIdAndUpdate(studentId, updateData, {
+      new: true,
+      runValidators: true
+    });
+
+    res.redirect(`/admin/students/${studentId}`);
   } catch (err) {
-    res.status(500).send('Update failed');
+    console.error("Error updating student:", err);
+    res.status(500).send("Update failed");
   }
 });
 

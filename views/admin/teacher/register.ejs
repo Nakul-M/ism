@@ -3,7 +3,7 @@
 <div class="container mt-5" style="max-width: 700px">
   <h2 class="mb-4 text-center text-primary">Register a New Teacher</h2>
 
- <form action="/admin/teachers" method="POST"  class="needs-validation" novalidate>
+<form action="/admin/teachers" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
   <input type="hidden" id="employeeId" name="employeeId" />
 
   <div class="mb-3">
@@ -32,7 +32,7 @@
 
   <div class="mb-3">
     <label for="address" class="form-label">Address</label>
-    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+    <textarea class="form-control" id="address" name="address" rows="3" ></textarea>
     <div class="invalid-feedback">Please enter an address.</div>
   </div>
 
@@ -59,9 +59,9 @@
       <div class="invalid-feedback">Please select a section.</div>
     </div>
   <div class="mb-3">
-    <label for="image" class="form-label">Photo URL</label>
-    <input type="url" class="form-control" id="image" name="image" placeholder="Optional">
-    <div class="form-text">Leave blank to use default profile photo.</div>
+    <label for="image" class="form-label">Photo </label>
+    <input type="file" class="form-control" id="image" name="image" required>
+  
   </div>
 
   <div class="text-end">
