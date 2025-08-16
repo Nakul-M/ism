@@ -4,7 +4,7 @@ const ClassMonthlyFee = require('../../models/ClassMonthlyFee');
 
 // GET form to enter/edit monthly fees
 router.get('/edit', (req, res) => {
-    res.render('admin/feeSetting/fee'{ShowFooter : False}); // Renders EJS form
+    res.render('admin/feeSetting/fee'{showFooter : False}); // Renders EJS form
 });
 
 // POST form to save monthly fees
