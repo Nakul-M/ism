@@ -4,7 +4,10 @@
   <!-- Meta Tags -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+<link rel ="manifest"
+    href="/manifest.json"
+   
+  />
   <!-- Title -->
   <title>Indra Shishu Mandir</title>
 
@@ -90,6 +93,14 @@
   document.getElementById("scrollTopBtn").onclick = function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+</script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js")
+      .then(reg => console.log("Service Worker registered:", reg))
+      .catch(err => console.error("Service Worker registration failed:", err));
+  }
 </script>
 
   </body>
