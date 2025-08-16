@@ -4,6 +4,42 @@
     padding: 0;
     background: #f5f5f5;
   }
+  /* Marks table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* equal column widths */
+}
+
+table th, table td {
+  padding: 8px;
+  border: 1px solid #000;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+table th {
+  background: #000;
+  color: #fff;
+}
+
+/* Wrap table in a scrollable container */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Optional: shrink font & padding for mobile */
+@media (max-width: 820px) {
+  table {
+    font-size: 12px;
+    min-width: 700px; /* keep structure, enable scroll */
+  }
+  table th, table td {
+    padding: 5px;
+  }
+}
+
 
   /* Default A4 styling for desktop */
   #result-content {
@@ -87,36 +123,38 @@
     </div>
   </div>
 
-  <!-- Marks Table -->
-  <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
-    <thead style="background: #000; color: white;">
+  <div class="table-container">
+  <table>
+    <thead>
       <tr>
-        <th style="padding: 8px; border: 1px solid #000;">Exam</th>
-        <th style="padding: 8px; border: 1px solid #000;">Math</th>
-        <th style="padding: 8px; border: 1px solid #000;">Science</th>
-        <th style="padding: 8px; border: 1px solid #000;">English</th>
-        <th style="padding: 8px; border: 1px solid #000;">Hindi</th>
-        <th style="padding: 8px; border: 1px solid #000;">Social</th>
-        <th style="padding: 8px; border: 1px solid #000;">Total</th>
+        <th>Exam</th>
+        <th>Math</th>
+        <th>Science</th>
+        <th>English</th>
+        <th>Hindi</th>
+        <th>Social</th>
+        <th>Total</th>
       </tr>
     </thead>
     <tbody>
       <% Object.keys(marks).forEach(exam => {
-          const m = marks[exam];
-          const total = (m.math || 0) + (m.science || 0) + (m.english || 0) + (m.hindi || 0) + (m.social || 0);
+        const m = marks[exam];
+        const total = (m.math || 0) + (m.science || 0) + (m.english || 0) + (m.hindi || 0) + (m.social || 0);
       %>
         <tr>
-          <td style="padding: 8px; border: 1px solid #000;"><%= exam %></td>
-          <td style="padding: 8px; border: 1px solid #000;"><%= m.math ?? '-' %></td>
-          <td style="padding: 8px; border: 1px solid #000;"><%= m.science ?? '-' %></td>
-          <td style="padding: 8px; border: 1px solid #000;"><%= m.english ?? '-' %></td>
-          <td style="padding: 8px; border: 1px solid #000;"><%= m.hindi ?? '-' %></td>
-          <td style="padding: 8px; border: 1px solid #000;"><%= m.social ?? '-' %></td>
-          <td style="padding: 8px; border: 1px solid #000;"><%= total %></td>
+          <td><%= exam %></td>
+          <td><%= m.math ?? '-' %></td>
+          <td><%= m.science ?? '-' %></td>
+          <td><%= m.english ?? '-' %></td>
+          <td><%= m.hindi ?? '-' %></td>
+          <td><%= m.social ?? '-' %></td>
+          <td><%= total %></td>
         </tr>
       <% }) %>
     </tbody>
   </table>
+</div>
+
 
   <!-- Attendance -->
   <div style="margin-bottom: 30px;">
