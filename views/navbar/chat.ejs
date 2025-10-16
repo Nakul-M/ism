@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MDoNER Portal Chatbot</title>
+
+  <style>
+    /* ---------- Base Styling ---------- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* ---------- Header ---------- */
+    header {
+      width: 94%;
+      background: #0d2e55;
+      color: white;
+      text-align: center;
+      padding: 12px 10px;
+      font-size: 20px;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* ---------- Chat Container ---------- */
+    #chatContainer {
+      width: 90%;
+      max-width: 1000px;
+      height: 75vh;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    #answerBox {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .msg {
+      max-width: 75%;
+      padding: 10px 14px;
+      border-radius: 15px;
+      word-wrap: break-word;
+      line-height: 1.4;
+      font-size: 15px;
+    }
+
+    .user {
+      align-self: flex-end;
+      background: #0078ff;
+      color: white;
+      border-bottom-right-radius: 0;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background: #f0f0f0;
+      color: #333;
+      border-bottom-left-radius: 0;
+    }
+
+    /* ---------- Input Form ---------- */
+    form {
+      display: flex;
+      padding: 10px;
+      background: #fafafa;
+      border-top: 1px solid #ddd;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    button {
+      background: #0078ff;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 16px;
+      margin-left: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #005fcc;
+    }
+
+    /* ---------- Scrollbar ---------- */
+    #answerBox::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #answerBox::-webkit-scrollbar-thumb {
+      background: #bbb;
+      border-radius: 10px;
+    }
+
+    #answerBox::-webkit-scrollbar-thumb:hover {
+      background: #999;
+    }
+
+    /* ---------- Typing Indicator ---------- */
+    .typing {
+      font-style: italic;
+      color: #666;
+      font-size: 13px;
+      margin-left: 5px;
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      width: 100%;
+      background: #f5f5f5;
+      color: #555;
+      text-align: center;
+      font-size: 14px;
+      padding: 8px 0;
+      border-top: 1px solid #ddd;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 768px) {
+      #chatContainer {
+        width: 95%;
+        height: 80vh;
+      }
+
+      header {
+        font-size: 18px;
+        padding: 10px;
+      }
+
+      .msg {
+        font-size: 14px;
+      }
+
+      input {
+        font-size: 14px;
+      }
+
+      button {
+        padding: 8px 14px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #chatContainer {
+        height: 82vh;
+      }
+
+      header {
+        font-size: 16px;
+      }
+
+      footer {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    STUDENT HELPER
+  </header>
+
+  <div id="chatContainer">
+    <div id="answerBox">
+      <div class="msg bot"><b>AI:</b> Hello 👋 How can I help you today?</div>
+    </div>
+    <form id="queryForm">
+      <input type="text" id="userQuery" placeholder="Ask about portal..." required />
+      <button type="submit">Ask</button>
+    </form>
+  </div>
+
+  <footer>
+    AI BASED . REFER SCHOOL FOR MORE INFORMATION
+  </footer>
+
+  <script>
+    const answerBox = document.getElementById("answerBox");
+    const chatContainer = document.getElementById("chatContainer");
+
+    document.getElementById("queryForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const userQuery = document.getElementById("userQuery").value.trim();
+      if (!userQuery) return;
+
+      const userMsg = document.createElement("div");
+      userMsg.classList.add("msg", "user");
+      userMsg.innerHTML = userQuery;
+      answerBox.appendChild(userMsg);
+      document.getElementById("userQuery").value = "";
+
+      const typing = document.createElement("div");
+      typing.classList.add("typing");
+      typing.innerText = "Portal is typing...";
+      answerBox.appendChild(typing);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      try {
+        const res = await fetch("/query", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userQuery }),
+        });
+
+        typing.remove();
+
+        if (!res.ok) throw new Error("Bad response");
+
+        const data = await res.json();
+
+        const botMsg = document.createElement("div");
+        botMsg.classList.add("msg", "bot");
+        botMsg.innerHTML = `<b>AI:</b> ${data.answer || "No response from model."}`;
+        answerBox.appendChild(botMsg);
+
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      } catch (err) {
+        typing.remove();
+        const errorMsg = document.createElement("div");
+        errorMsg.classList.add("msg", "bot");
+        errorMsg.innerHTML = `<b>AI:</b> Error fetching answer.`;
+        answerBox.appendChild(errorMsg);
+        console.error(err);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+    });
+  </script>
+</body>
+</html>
