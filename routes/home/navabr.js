@@ -63,5 +63,12 @@ router.post("/query", async (req, res) => {
     res.status(500).json({ error: "Failed to get answer from portal assistant" });
   }
 });
+router.get("/whatsapp", (req, res) => {
+  const whatsappUrl = "https://api.whatsapp.com/send/?phone=%2B14155238886&text=join+saved-supply&type=phone_number&app_absent=0";
+  res.redirect(whatsappUrl);
+});
+
+
 
 module.exports = router;
+

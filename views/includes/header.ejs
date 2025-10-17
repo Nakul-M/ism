@@ -1,3 +1,37 @@
+
+
+<!-- WhatsApp Floater -->
+<style>
+  #whatsapp-floater {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  #whatsapp-floater:hover {
+    transform: scale(1.1);
+  }
+
+  #whatsapp-floater i {
+    color: white;
+    font-size: 30px;
+  }
+</style>
+
+<a href="/whatsapp" id="whatsapp-floater" target="_blank">
+  <i class="bi bi-whatsapp"></i>
+</a>
 <!-- Top Bar -->
  <% if (typeof showFooter === 'undefined' || showFooter) { %>
   <div class="bg-light py-2 px-4 d-flex justify-content-between align-items-center">
